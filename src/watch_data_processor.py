@@ -15,16 +15,21 @@ class WatchDataProcessor:
     
     def clean_data(self):
         print_section("🧹 Nettoyage des données")
-        self.df.drop(columns=["Unnamed: 0", "condition"], inplace=True, errors='ignore')
-        
-        self.df["price"] = self.df["price"].replace("Price on request", None)
+
+        self.df.drop(columns=["Unnamed: 0", "condition"], inplace=True, errors="ignore")
+
+        self.df["price"] = self.df["price"].astype(str)
+        self.df = self.df[~self.df["price"].str.contains("Price on request", na=False)]  # Supprime ces lignes
+        self.df["price"] = self.df["price"].str.replace("[\$,]", "", regex=True).str.replace(",", "").astype(float)
         self.df.loc[:, "price"] = self.df["price"].fillna(self.df["price"].median())
-        self.df["price"].fillna(self.df["price"].median(), inplace=True)
-        
+
         self.df["yop"] = pd.to_numeric(self.df["yop"], errors="coerce")
-        self.df["size"] = self.df["size"].str.extract(r"(\d+)").astype(float)
-        
+        self.df["size"] = self.df["size"].astype(str).str.extract(r"(\d+)").astype(float)
+
+        self.df = self.df[(self.df["price"] >= 500) & (self.df["price"] <= 500000)]
         self.df = self.df[(self.df["size"] >= 20) & (self.df["size"] <= 60)]
+
+
     
     def get_data(self):
         return self.df
