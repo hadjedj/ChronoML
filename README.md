@@ -43,10 +43,8 @@ python3 -m main.py
 📊 Data Science : Pandas, Matplotlib, Seaborn
 🛠️ POO et Modularité : Structuration en classes
 
-📧 Contact
-📌 Développé par Yanis Hadjedj 
-📩 Contact : yaniszachariahadjedj@gmail.com
-https://www.linkedin.com/in/yanis-hadjedj-b480a62b5/
+📧 Contact 
+📩 Contact : https://www.linkedin.com/in/yanis-hadjedj-b480a62b5/
 
 
 
